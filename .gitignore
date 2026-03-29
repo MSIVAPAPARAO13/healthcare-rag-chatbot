@@ -37,9 +37,9 @@ Thumbs.db
 # 📦 Pinecone / model temp files (optional)
 *.pkl
 
-# 🚫 Ignore large data files (IMPORTANT)
-data/*.pdf
-data/*.txt
+# # 🚫 Ignore large data files (IMPORTANT)
+# data/*.pdf
+# data/*.txt
 
 # 🚫 Ignore local DB / cache
 *.db
