@@ -1,82 +1,246 @@
-Build-a-Complete-Medical-Chatbot-with-LLMs-LangChain-Pinecone-Flask-AWS
-How to run?
-STEPS:
-Clone the repository
+# 🏥 Medical Chatbot using LLMs, LangChain, Pinecone & Flask
 
-git clonehttps://github.com/entbappy/Build-a-Complete-Medical-Chatbot-with-LLMs-LangChain-Pinecone-Flask-AWS.git
-STEP 01- Create a conda environment after opening the repository
+A production-ready **AI-powered Medical Chatbot** that leverages **Retrieval-Augmented Generation (RAG)** to provide accurate, context-aware medical responses using custom PDF data.
+
+---
+
+## 🚀 Project Overview
+
+This project implements an end-to-end **Medical Question Answering System** using:
+
+* 📄 Custom medical documents (PDFs)
+* 🧠 Embeddings + Vector Database (Pinecone)
+* 🤖 Large Language Models (LLMs via Groq/OpenAI)
+* 🔗 LangChain for orchestration
+* 🌐 Flask for backend API
+* 🐳 Docker + ☁️ AWS for deployment
+
+---
+
+## 🧠 Architecture
+
+```
+User Query
+   ↓
+Flask API
+   ↓
+Retriever (Pinecone)
+   ↓
+Relevant Chunks (PDF Data)
+   ↓
+LLM (Groq / OpenAI)
+   ↓
+Final Answer (Context-aware)
+```
+
+---
+
+## ✨ Features
+
+* ✅ Retrieval-Augmented Generation (RAG)
+* ✅ Custom PDF-based knowledge system
+* ✅ Fast semantic search using Pinecone
+* ✅ Scalable backend using Flask
+* ✅ Dockerized for production
+* ✅ AWS deployment ready (ECR + EC2)
+* ✅ CI/CD with GitHub Actions
+
+---
+
+## 🛠️ Tech Stack
+
+* **Backend:** Python, Flask
+* **LLM:** Groq / OpenAI
+* **Framework:** LangChain
+* **Vector DB:** Pinecone
+* **Embeddings:** Sentence Transformers
+* **Deployment:** Docker, AWS (EC2, ECR)
+* **CI/CD:** GitHub Actions
+
+---
+
+## ⚙️ Installation & Setup
+
+### 1️⃣ Clone Repository
+
+```bash
+git clone https://github.com/your-username/your-repo.git
+cd healthcare-rag-chatbot
+```
+
+---
+
+### 2️⃣ Create Environment
+
+```bash
 conda create -n medibot python=3.10 -y
 conda activate medibot
-STEP 02- install the requirements
+```
+
+---
+
+### 3️⃣ Install Dependencies
+
+```bash
 pip install -r requirements.txt
-Create a .env file in the root directory and add your Pinecone & openai credentials as follows:
-PINECONE_API_KEY = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-OPENAI_API_KEY = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-# run the following command to store embeddings to pinecone
+```
+
+---
+
+### 4️⃣ Setup Environment Variables
+
+Create `.env` file:
+
+```env
+PINECONE_API_KEY=your_pinecone_key
+GROQ_API_KEY=your_groq_key
+```
+
+---
+
+### 5️⃣ Ingest Data into Pinecone
+
+```bash
 python store_index.py
-# Finally run the following command
+```
+
+---
+
+### 6️⃣ Run Application
+
+```bash
 python app.py
-Now,
+```
 
-open up localhost:
-Techstack Used:
-Python
-LangChain
-Flask
-GPT
-Pinecone
-AWS-CICD-Deployment-with-Github-Actions
-1. Login to AWS console.
-2. Create IAM user for deployment
-#with specific access
+---
 
-1. EC2 access : It is virtual machine
+### 🌐 Access App
 
-2. ECR: Elastic Container registry to save your docker image in aws
+```
+http://localhost:8080
+```
 
+---
 
-#Description: About the deployment
+## 🧪 Sample Queries
 
-1. Build docker image of the source code
+* What is Acne?
+* What are symptoms of diabetes?
+* How is hypertension treated?
+* Causes of fever
 
-2. Push your docker image to ECR
+---
 
-3. Launch Your EC2 
+## 🐳 Docker Deployment
 
-4. Pull Your image from ECR in EC2
+### Build Image
 
-5. Lauch your docker image in EC2
+```bash
+docker build -t medical-chatbot .
+```
 
-#Policy:
+### Run Container
 
-1. AmazonEC2ContainerRegistryFullAccess
+```bash
+docker run -d -p 8080:8080 \
+-e PINECONE_API_KEY=xxx \
+-e GROQ_API_KEY=xxx \
+medical-chatbot
+```
 
-2. AmazonEC2FullAccess
-3. Create ECR repo to store/save docker image
-- Save the URI: 315865595366.dkr.ecr.us-east-1.amazonaws.com/medicalbot
-4. Create EC2 machine (Ubuntu)
-5. Open EC2 and Install docker in EC2 Machine:
-#optinal
+---
 
-sudo apt-get update -y
+## ☁️ AWS Deployment (Production)
 
-sudo apt-get upgrade
+### 🔹 Services Used
 
-#required
+* EC2 (Compute)
+* ECR (Container Registry)
+* IAM (Access Control)
 
-curl -fsSL https://get.docker.com -o get-docker.sh
+---
 
-sudo sh get-docker.sh
+### 🔹 Deployment Steps
 
-sudo usermod -aG docker ubuntu
+1. Build Docker image
+2. Push image to AWS ECR
+3. Launch EC2 instance
+4. Install Docker on EC2
+5. Pull image from ECR
+6. Run container
 
-newgrp docker
-6. Configure EC2 as self-hosted runner:
-setting>actions>runner>new self hosted runner> choose os> then run command one by one
-7. Setup github secrets:
-AWS_ACCESS_KEY_ID
-AWS_SECRET_ACCESS_KEY
-AWS_DEFAULT_REGION
-ECR_REPO
-PINECONE_API_KEY
-OPENAI_API_KEY
+---
+
+### 🔹 IAM Policies
+
+* AmazonEC2FullAccess
+* AmazonEC2ContainerRegistryFullAccess
+
+---
+
+### 🔹 GitHub Actions (CI/CD)
+
+* Automates build & deployment
+* Uses secrets:
+
+  * AWS_ACCESS_KEY_ID
+  * AWS_SECRET_ACCESS_KEY
+  * ECR_REPO
+  * PINECONE_API_KEY
+  * GROQ_API_KEY
+
+---
+
+## 📂 Project Structure
+
+```
+medical-chatbot/
+│
+├── app.py
+├── store_index.py
+├── requirements.txt
+├── Dockerfile
+├── .env
+│
+├── src/
+│   ├── helper.py
+│   ├── prompt.py
+│
+├── templates/
+├── static/
+└── data/
+```
+
+---
+
+## 🔥 Key Highlights (For Interview)
+
+* Built **end-to-end RAG system**
+* Integrated **LLM + Vector DB + Backend**
+* Solved **hallucination using context retrieval**
+* Implemented **scalable deployment using Docker & AWS**
+* Designed **real-world healthcare assistant**
+
+---
+
+## 🚧 Future Improvements
+
+* Add chat memory
+* Streaming responses
+* Voice input/output
+* Multi-language support
+* Fine-tuned medical models
+
+---
+
+## 👨‍💻 Author
+
+**Siva Paparao Medisetti**
+
+---
+
+## ⭐ If you like this project
+
+Give it a ⭐ on GitHub!
+
+---
